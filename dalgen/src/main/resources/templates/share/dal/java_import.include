@@ -1,0 +1,14 @@
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import ${tableConfig.basepackage}.utils.PageQueryUtils;
+import ${tableConfig.basepackage}.utils.PageQuery;
+import ${tableConfig.basepackage}.utils.Paginator;
+import ${tableConfig.basepackage}.utils.PageList;
+
+

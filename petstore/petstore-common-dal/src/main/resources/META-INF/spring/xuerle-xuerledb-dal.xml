@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+
+	<!-- ======================================================================== -->
+	<!--  Transaction Manager Config                                              -->
+	<!-- ======================================================================== -->
+	<bean id="petstoredbTransactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="petstoredbDataSource" />
+		</property>
+	</bean>
+
+	<bean id="petstoredbTransactionTemplate"
+		  class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="petstoredbTransactionManager" />
+		</property>
+	</bean>
+
+
+	<!-- ======================================================================== -->
+	<!--  SqlSessionDAO config                                                  -->
+	<!-- ======================================================================== -->
+	<bean id="petstoredbSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="petstoredbDataSource" />
+		</property>
+		<property name="mapperLocations">
+			<value>classpath*:sqlmap/petstore/petstoredb/mappers/**/*.xml</value>
+		</property>
+	</bean>
+
+	<bean id="petstoredbSqlSessionDAO" abstract="true">
+		<property name="sqlSessionFactory" ref="petstoredbSqlSessionFactory" />
+	</bean>
+
+	<!-- ======================================================================== -->
+    <!--  DAO configs: auto generate by dalgen                                    -->
+    <!-- ======================================================================== -->
+    <bean id="memberDAO" class="net.petstore.common.dal.dalgen.mybatis.MybatisMemberDAO" parent="petstoredbSqlSessionDAO"/>
+    <bean id="paymentDAO" class="net.petstore.common.dal.dalgen.mybatis.MybatisPaymentDAO" parent="petstoredbSqlSessionDAO"/>
+	
+</beans>

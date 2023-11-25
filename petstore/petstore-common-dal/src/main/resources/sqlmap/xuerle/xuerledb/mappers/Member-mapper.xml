@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="petstore.petstoredb.Member">
+
+    
+    <resultMap id="RM_Member" type="net.petstore.common.dal.dalgen.dataobject.MemberDO">
+		<result property="id" column="id" javaType="Integer" jdbcType="INTEGER"  />
+		<result property="uuid" column="uuid" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="password" column="password" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="phoneNumber" column="phone_number" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="age" column="age" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="qqNumber" column="qq_number" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="signupDate" column="signup_date" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="wechatUid" column="wechat_uid" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="nickName" column="nick_name" javaType="java.lang.String" jdbcType="VARCHAR"  />
+    </resultMap>
+    
+	<sql id="Member_columns">
+		id, uuid, real_name, password, phone_number, age, qq_number, signup_date, wechat_uid, nick_name
+	</sql>
+		
+
+	
+	
+    
+	<insert id="petstore_Member_insert">
+		INSERT INTO member (
+	        	id ,uuid ,real_name ,password ,phone_number ,age ,qq_number ,signup_date ,wechat_uid ,nick_name 
+	        ) VALUES (#{id},#{uuid},#{realName},#{password},#{phoneNumber},#{age},#{qqNumber},#{signupDate},#{wechatUid},#{nickName})
+		<selectKey resultType="Integer" order="AFTER" keyProperty="id" >
+            select last_insert_id()
+    	</selectKey>        
+	</insert>
+	
+	
+	<delete id="petstore_Member_delete">
+		DELETE FROM member WHERE
+	        id = #{id}
+    </delete>
+    
+	
+	<update id="petstore_Member_update">
+		UPDATE member SET
+		        uuid = #{uuid} ,real_name = #{realName} ,password = #{password} ,phone_number = #{phoneNumber} ,age = #{age} ,qq_number = #{qqNumber} ,signup_date = #{signupDate} ,wechat_uid = #{wechatUid} ,nick_name = #{nickName} 
+	        WHERE
+	        	id = #{id}
+	</update>
+	
+    
+	
+	<update id="petstore_Member_updateIf">
+		UPDATE	member
+			<set>
+				<if test="uuid != null">
+					uuid = #{uuid} ,
+				</if>
+				<if test="realName != null">
+					real_name = #{realName} ,
+				</if>
+				<if test="password != null">
+					password = #{password} ,
+				</if>
+				<if test="phoneNumber != null">
+					phone_number = #{phoneNumber} ,
+				</if>
+				<if test="age != null">
+					age = #{age} ,
+				</if>
+				<if test="qqNumber != null">
+					qq_number = #{qqNumber} ,
+				</if>
+				<if test="signupDate != null">
+					signup_date = #{signupDate} ,
+				</if>
+				<if test="wechatUid != null">
+					wechat_uid = #{wechatUid} ,
+				</if>
+				<if test="nickName != null">
+					nick_name = #{nickName} 
+				</if>
+			</set>
+			<where>
+				id = #{id} 
+			</where>
+	</update>
+	
+    
+	
+	<select id="petstore_Member_queryById" resultMap="RM_Member" >
+    	SELECT
+ /*petstore_Member_queryById*/ 		    <include refid="Member_columns"/>
+	        FROM member
+	        WHERE
+		        id = #{id}
+	</select>	
+
+	    
+	
+	
+    
+	
+	<select id="petstore_Member_queryByUuid" resultMap="RM_Member" >
+    	SELECT
+ /*petstore_Member_queryByUuid*/ 	    	<include refid="Member_columns"/>
+	        FROM member where uuid = #{uuid}
+	</select>	
+
+	    
+	
+	
+    
+	
+	<select id="petstore_Member_findPage" resultMap="RM_Member" >
+    	SELECT
+ /*petstore_Member_findPage*/ 			<include refid="Member_columns"/>
+			FROM member
+			<where>
+				<if test="uuid != null">
+					AND uuid = #{uuid}
+				</if>
+				<if test="realName != null">
+					AND real_name = #{realName}
+				</if>
+				<if test="password != null">
+					AND password = #{password}
+				</if>
+				<if test="phoneNumber != null">
+					AND phone_number = #{phoneNumber}
+				</if>
+				<if test="age != null">
+					AND age = #{age}
+				</if>
+				<if test="qqNumber != null">
+					AND qq_number = #{qqNumber}
+				</if>
+				<if test="signupDate != null">
+					AND signup_date = #{signupDate}
+				</if>
+				<if test="wechatUid != null">
+					AND wechat_uid = #{wechatUid}
+				</if>
+				<if test="nickName != null">
+					AND nick_name = #{nickName}
+				</if>
+			</where>
+			limit #offset#,#limit#
+	</select>	
+
+	<select id="petstore_Member_findPage_count" resultType="long" >
+    	select  /*petstore_Member_findPage_count*/ count(*) 	FROM member
+			<where>
+				<if test="uuid != null">
+					AND uuid = #{uuid}
+				</if>
+				<if test="realName != null">
+					AND real_name = #{realName}
+				</if>
+				<if test="password != null">
+					AND password = #{password}
+				</if>
+				<if test="phoneNumber != null">
+					AND phone_number = #{phoneNumber}
+				</if>
+				<if test="age != null">
+					AND age = #{age}
+				</if>
+				<if test="qqNumber != null">
+					AND qq_number = #{qqNumber}
+				</if>
+				<if test="signupDate != null">
+					AND signup_date = #{signupDate}
+				</if>
+				<if test="wechatUid != null">
+					AND wechat_uid = #{wechatUid}
+				</if>
+				<if test="nickName != null">
+					AND nick_name = #{nickName}
+				</if>
+			</where>
+	</select>
+	    
+	
+	
+    
+
+</mapper>
+

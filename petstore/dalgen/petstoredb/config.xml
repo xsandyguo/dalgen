@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <entry key="dal_package">net.petstore.common.dal</entry>
+
+    <entry key="appName">petstore</entry>
+    <entry key="appModule">petstore</entry>
+    <entry key="dbModule">petstoredb</entry>
+    <entry key="dbModuleCamel">petstoreDb</entry>
+    <entry key="tableRemovePrefixes">t_</entry>
+
+    <entry key="java_typemapping.java.sql.Timestamp">java.util.Date</entry>
+    <entry key="java_typemapping.java.sql.Date">java.util.Date</entry>
+    <entry key="java_typemapping.java.sql.Time">java.util.Date</entry>
+    <entry key="java_typemapping.java.sql.Clob">String</entry>
+    <entry key="java_typemapping.java.lang.Integer">Integer</entry>
+    <entry key="java_typemapping.java.lang.Long">Long</entry>
+    <entry key="java_typemapping.java.lang.Byte">Integer</entry>
+    <entry key="java_typemapping.java.lang.Short">Integer</entry>
+    <entry key="java_typemapping.java.math.BigDecimal">Long</entry>
+    <entry key="java_typemapping.java.lang.Object">String</entry>
+
+    <entry key="annotation_config">true</entry>
+    <entry key="dir_table_configs">tables</entry>
+    <entry key="dir_dal_output_root">../../petstore-common-dal</entry>
+
+    <entry key="dir_templates_root">classpath:template</entry>
+
+    <entry key="copyright_startYear">2020</entry>
+    <entry key="copyright_endYear">2023</entry>
+    <entry key="copyright_company">petstore.net</entry>
+
+    <entry key="generator_sourceEncoding">UTF-8</entry>
+    <entry key="generator_outEncoding">UTF-8</entry>
+
+    <entry key="jdbc_username">petstoredb</entry>
+    <entry key="jdbc_password">12345</entry>
+    <entry key="jdbc_url">jdbc:mysql://127.0.0.1:3306/petstoredb?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+    <!--    <entry key="jdbc_driver">com.mysql.jdbc.Driver</entry>-->
+    <entry key="jdbc_driver">com.mysql.cj.jdbc.Driver</entry>
+</properties>

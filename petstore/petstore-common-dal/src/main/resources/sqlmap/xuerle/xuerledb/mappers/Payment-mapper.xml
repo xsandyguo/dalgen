@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="petstore.petstoredb.Payment">
+
+    
+    <resultMap id="RM_Payment" type="net.petstore.common.dal.dalgen.dataobject.PaymentDO">
+		<result property="id" column="id" javaType="Integer" jdbcType="INTEGER"  />
+		<result property="uuid" column="uuid" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="amt" column="amt" javaType="java.lang.Double" jdbcType="DOUBLE"  />
+		<result property="status" column="status" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<result property="gmtCreated" column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"  />
+		<result property="paymentTime" column="payment_time" javaType="java.util.Date" jdbcType="TIMESTAMP"  />
+		<result property="payChannel" column="pay_channel" javaType="java.lang.String" jdbcType="VARCHAR"  />
+    </resultMap>
+    
+	<sql id="Payment_columns">
+		id, uuid, amt, status, gmt_created, payment_time, pay_channel
+	</sql>
+		
+
+	
+	
+    
+	<insert id="petstore_Payment_insert">
+		INSERT INTO payment (
+	        	id ,uuid ,amt ,status ,gmt_created ,payment_time ,pay_channel 
+	        ) VALUES (#{id},#{uuid},#{amt},#{status},#{gmtCreated},#{paymentTime},#{payChannel})
+		<selectKey resultType="Integer" order="AFTER" keyProperty="id" >
+            select last_insert_id()
+    	</selectKey>        
+	</insert>
+	
+	
+	<delete id="petstore_Payment_delete">
+		DELETE FROM payment WHERE
+	        id = #{id}
+    </delete>
+    
+	
+	<update id="petstore_Payment_update">
+		UPDATE payment SET
+		        uuid = #{uuid} ,amt = #{amt} ,status = #{status} ,gmt_created = #{gmtCreated} ,payment_time = #{paymentTime} ,pay_channel = #{payChannel} 
+	        WHERE
+	        	id = #{id}
+	</update>
+	
+    
+	
+	<update id="petstore_Payment_updateIf">
+		UPDATE	payment
+			<set>
+				<if test="uuid != null">
+					uuid = #{uuid} ,
+				</if>
+				<if test="amt != null">
+					amt = #{amt} ,
+				</if>
+				<if test="status != null">
+					status = #{status} ,
+				</if>
+				<if test="gmtCreated != null">
+					gmt_created = #{gmtCreated} ,
+				</if>
+				<if test="paymentTime != null">
+					payment_time = #{paymentTime} ,
+				</if>
+				<if test="payChannel != null">
+					pay_channel = #{payChannel} 
+				</if>
+			</set>
+			<where>
+				id = #{id} 
+			</where>
+	</update>
+	
+    
+	
+	<select id="petstore_Payment_queryById" resultMap="RM_Payment" >
+    	SELECT
+ /*petstore_Payment_queryById*/ 		    <include refid="Payment_columns"/>
+	        FROM payment
+	        WHERE
+		        id = #{id}
+	</select>	
+
+	    
+	
+	
+    
+	
+	<select id="petstore_Payment_queryByUuid" resultMap="RM_Payment" >
+    	SELECT
+ /*petstore_Payment_queryByUuid*/ 	    	<include refid="Payment_columns"/>
+	        FROM payment where uuid = #{uuid}
+	</select>	
+
+	    
+	
+	
+    
+	
+	<select id="petstore_Payment_findPage" resultMap="RM_Payment" >
+    	SELECT
+ /*petstore_Payment_findPage*/ 			<include refid="Payment_columns"/>
+			FROM payment
+			<where>
+				<if test="uuid != null">
+					AND uuid = #{uuid}
+				</if>
+				<if test="amt != null">
+					AND amt = #{amt}
+				</if>
+				<if test="status != null">
+					AND status = #{status}
+				</if>
+				<if test="gmtCreated != null">
+					AND gmt_created = #{gmtCreated}
+				</if>
+				<if test="paymentTime != null">
+					AND payment_time = #{paymentTime}
+				</if>
+				<if test="payChannel != null">
+					AND pay_channel = #{payChannel}
+				</if>
+			</where>
+			limit #offset#,#limit#
+	</select>	
+
+	<select id="petstore_Payment_findPage_count" resultType="long" >
+    	select  /*petstore_Payment_findPage_count*/ count(*) 	FROM payment
+			<where>
+				<if test="uuid != null">
+					AND uuid = #{uuid}
+				</if>
+				<if test="amt != null">
+					AND amt = #{amt}
+				</if>
+				<if test="status != null">
+					AND status = #{status}
+				</if>
+				<if test="gmtCreated != null">
+					AND gmt_created = #{gmtCreated}
+				</if>
+				<if test="paymentTime != null">
+					AND payment_time = #{paymentTime}
+				</if>
+				<if test="payChannel != null">
+					AND pay_channel = #{payChannel}
+				</if>
+			</where>
+	</select>
+	    
+	
+	
+    
+
+</mapper>
+

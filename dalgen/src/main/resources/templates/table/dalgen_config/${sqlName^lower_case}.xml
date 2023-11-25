@@ -1,0 +1,101 @@
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table SYSTEM "mybatis-table-config-1.0.dtd">
+
+<table sqlname="${table.sqlName}">
+	<#list table.columns as column>
+	<#if column.sqlName?lower_case?contains('amount') && column.javaType?lower_case?contains('long')>
+	<column name="${column.sqlName}" javatype="com.iwallet.biz.common.util.money.Money" />
+	</#if>
+	</#list>
+
+	<sql id="${className}_columns">
+		<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if> </#list>
+	</sql>
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			INSERT INTO ${table.sqlName} (
+	        	<#list table.columns as column>${column.sqlName} <#if column_has_next>,</#if></#list>
+	        ) VALUES (
+	        	<#list table.columns as column>? <#if column_has_next>,</#if></#list>
+	        )
+		</sql>
+	</operation>
+
+	<operation name="delete">
+		<sql>
+	        DELETE FROM ${table.sqlName} WHERE
+	        <#list table.pkColumns as column>
+	        ${column.sqlName} = ? <#if column_has_next> AND </#if>
+			</#list>
+		</sql>
+	</operation>
+
+	<operation name="update" paramtype="object">
+		<sql>
+	        UPDATE ${table.sqlName} SET
+		        <#list table.notPkColumns as column>${column.sqlName} = ? <#if column_has_next>,</#if></#list>
+	        WHERE
+	        	<#list table.pkColumns as column>${column.sqlName} = ? <#if column_has_next> AND </#if></#list>
+		</sql>
+	</operation>
+
+	<operation name="updateIf" paramtype="object">
+		<sql>
+			UPDATE	${table.sqlName}
+			<set>
+				<#list table.notPkColumns as column>
+				<if test="${column.columnNameFirstLower} != null">
+					${column.sqlName} = <#noparse>#{</#noparse>${column.columnNameFirstLower}} <#if column_has_next>,</#if>
+				</if>
+				</#list>
+			</set>
+			<where>
+				<#list table.pkColumns as column>${column.sqlName} = ? <#if column_has_next> AND </#if></#list>
+			</where>
+		</sql>
+	</operation>
+
+	<operation name="queryById" multiplicity="one">
+		<sql>
+	    	SELECT
+		    <include refid="${className}_columns"/>
+	        FROM ${table.sqlName}
+	        WHERE
+				<#list table.pkColumns as column>
+		        ${column.sqlName} = ? <#if column_has_next> AND </#if>
+		        </#list>
+		</sql>
+	</operation>
+
+    <#list table.columns as column>
+    <#if column.unique && !column.pk>
+
+    <operation name="queryBy${column.columnName}" paramtype="primitive" multiplicity="one">
+    	<sql>
+	    	SELECT
+	    	<include refid="${className}_columns"/>
+	        FROM ${table.sqlName} where ${column.sqlName} = ?
+		</sql>
+    </operation>
+    </#if>
+	</#list>
+
+	<operation name="findPage" multiplicity="paging" paramtype="parameterObject">
+		<sql>
+			SELECT
+			<include refid="${className}_columns"/>
+			FROM ${table.sqlName}
+			<where>
+				<#list table.notPkColumns as column>
+				<if test="${column.columnNameFirstLower} != null">
+					AND ${column.sqlName} = <#noparse>#{</#noparse>${column.columnNameFirstLower}}
+				</if>
+				</#list>
+			</where>
+		</sql>
+	</operation>
+
+</table>

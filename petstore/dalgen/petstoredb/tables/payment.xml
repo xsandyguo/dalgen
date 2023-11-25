@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table SYSTEM "mybatis-table-config-1.0.dtd">
+
+<table sqlname="payment">
+
+	<sql id="Payment_columns">
+		id, uuid, amt, status, gmt_created, payment_time, pay_channel 
+	</sql>
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			INSERT INTO payment (
+	        	id ,uuid ,amt ,status ,gmt_created ,payment_time ,pay_channel 
+	        ) VALUES (
+	        	? ,? ,? ,? ,? ,? ,? 
+	        )
+		</sql>
+	</operation>
+
+	<operation name="delete">
+		<sql>
+	        DELETE FROM payment WHERE
+	        id = ? 
+		</sql>
+	</operation>
+
+	<operation name="update" paramtype="object">
+		<sql>
+	        UPDATE payment SET
+		        uuid = ? ,amt = ? ,status = ? ,gmt_created = ? ,payment_time = ? ,pay_channel = ? 
+	        WHERE
+	        	id = ? 
+		</sql>
+	</operation>
+
+	<operation name="updateIf" paramtype="object">
+		<sql>
+			UPDATE	payment
+			<set>
+				<if test="uuid != null">
+					uuid = #{uuid} ,
+				</if>
+				<if test="amt != null">
+					amt = #{amt} ,
+				</if>
+				<if test="status != null">
+					status = #{status} ,
+				</if>
+				<if test="gmtCreated != null">
+					gmt_created = #{gmtCreated} ,
+				</if>
+				<if test="paymentTime != null">
+					payment_time = #{paymentTime} ,
+				</if>
+				<if test="payChannel != null">
+					pay_channel = #{payChannel} 
+				</if>
+			</set>
+			<where>
+				id = ? 
+			</where>
+		</sql>
+	</operation>
+
+	<operation name="queryById" multiplicity="one">
+		<sql>
+	    	SELECT
+		    <include refid="Payment_columns"/>
+	        FROM payment
+	        WHERE
+		        id = ? 
+		</sql>
+	</operation>
+
+
+    <operation name="queryByUuid" paramtype="primitive" multiplicity="one">
+    	<sql>
+	    	SELECT
+	    	<include refid="Payment_columns"/>
+	        FROM payment where uuid = ?
+		</sql>
+    </operation>
+
+	<operation name="findPage" multiplicity="paging" paramtype="parameterObject">
+		<sql>
+			SELECT
+			<include refid="Payment_columns"/>
+			FROM payment
+			<where>
+				<if test="uuid != null">
+					AND uuid = #{uuid}
+				</if>
+				<if test="amt != null">
+					AND amt = #{amt}
+				</if>
+				<if test="status != null">
+					AND status = #{status}
+				</if>
+				<if test="gmtCreated != null">
+					AND gmt_created = #{gmtCreated}
+				</if>
+				<if test="paymentTime != null">
+					AND payment_time = #{paymentTime}
+				</if>
+				<if test="payChannel != null">
+					AND pay_channel = #{payChannel}
+				</if>
+			</where>
+		</sql>
+	</operation>
+
+</table>

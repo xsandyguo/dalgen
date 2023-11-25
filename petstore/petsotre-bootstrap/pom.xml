@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>net.petstore</groupId>
+        <artifactId>petstore-parent</artifactId>
+        <version>1.0.0.20231028</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>petstore-bootstrap</artifactId>
+    <version>1.0.0.20231028</version>
+    <name>petstore-bootstrap</name>
+
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>net.petstore</groupId>
+            <artifactId>petstore-common-dal</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.petstore</groupId>
+            <artifactId>petstore-common-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.petstore</groupId>
+            <artifactId>petstore-core-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.petstore</groupId>
+            <artifactId>petstore-web-home</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.petstore</groupId>
+            <artifactId>petstore-web-business</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.1.5</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

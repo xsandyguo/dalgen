@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table SYSTEM "mybatis-table-config-1.0.dtd">
+
+<table sqlname="member">
+
+	<sql id="Member_columns">
+		id, uuid, real_name, password, phone_number, age, qq_number, signup_date, wechat_uid, nick_name 
+	</sql>
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			INSERT INTO member (
+	        	id ,uuid ,real_name ,password ,phone_number ,age ,qq_number ,signup_date ,wechat_uid ,nick_name 
+	        ) VALUES (
+	        	? ,? ,? ,? ,? ,? ,? ,? ,? ,? 
+	        )
+		</sql>
+	</operation>
+
+	<operation name="delete">
+		<sql>
+	        DELETE FROM member WHERE
+	        id = ? 
+		</sql>
+	</operation>
+
+	<operation name="update" paramtype="object">
+		<sql>
+	        UPDATE member SET
+		        uuid = ? ,real_name = ? ,password = ? ,phone_number = ? ,age = ? ,qq_number = ? ,signup_date = ? ,wechat_uid = ? ,nick_name = ? 
+	        WHERE
+	        	id = ? 
+		</sql>
+	</operation>
+
+	<operation name="updateIf" paramtype="object">
+		<sql>
+			UPDATE	member
+			<set>
+				<if test="uuid != null">
+					uuid = #{uuid} ,
+				</if>
+				<if test="realName != null">
+					real_name = #{realName} ,
+				</if>
+				<if test="password != null">
+					password = #{password} ,
+				</if>
+				<if test="phoneNumber != null">
+					phone_number = #{phoneNumber} ,
+				</if>
+				<if test="age != null">
+					age = #{age} ,
+				</if>
+				<if test="qqNumber != null">
+					qq_number = #{qqNumber} ,
+				</if>
+				<if test="signupDate != null">
+					signup_date = #{signupDate} ,
+				</if>
+				<if test="wechatUid != null">
+					wechat_uid = #{wechatUid} ,
+				</if>
+				<if test="nickName != null">
+					nick_name = #{nickName} 
+				</if>
+			</set>
+			<where>
+				id = ? 
+			</where>
+		</sql>
+	</operation>
+
+	<operation name="queryById" multiplicity="one">
+		<sql>
+	    	SELECT
+		    <include refid="Member_columns"/>
+	        FROM member
+	        WHERE
+		        id = ? 
+		</sql>
+	</operation>
+
+
+    <operation name="queryByUuid" paramtype="primitive" multiplicity="one">
+    	<sql>
+	    	SELECT
+	    	<include refid="Member_columns"/>
+	        FROM member where uuid = ?
+		</sql>
+    </operation>
+
+	<operation name="findPage" multiplicity="paging" paramtype="parameterObject">
+		<sql>
+			SELECT
+			<include refid="Member_columns"/>
+			FROM member
+			<where>
+				<if test="uuid != null">
+					AND uuid = #{uuid}
+				</if>
+				<if test="realName != null">
+					AND real_name = #{realName}
+				</if>
+				<if test="password != null">
+					AND password = #{password}
+				</if>
+				<if test="phoneNumber != null">
+					AND phone_number = #{phoneNumber}
+				</if>
+				<if test="age != null">
+					AND age = #{age}
+				</if>
+				<if test="qqNumber != null">
+					AND qq_number = #{qqNumber}
+				</if>
+				<if test="signupDate != null">
+					AND signup_date = #{signupDate}
+				</if>
+				<if test="wechatUid != null">
+					AND wechat_uid = #{wechatUid}
+				</if>
+				<if test="nickName != null">
+					AND nick_name = #{nickName}
+				</if>
+			</where>
+		</sql>
+	</operation>
+
+</table>
