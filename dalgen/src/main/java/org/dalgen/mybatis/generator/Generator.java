@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dalgen.mybatis.util.*;
 
 import freemarker.template.Configuration;
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Generator {
   private static final String GENERATOR_INSERT_LOCATION       = "generator-insert-location";
+  private static final String GNENERATOR_NONE_OVERRIDE="!";
   private ArrayList<File>     templateRootDirs                = new ArrayList<File>();
   private String              outRootDir;
   private boolean             ignoreTemplateGenerateException = true;
@@ -47,6 +49,8 @@ public class Generator {
       GeneratorProperties.getProperty(GeneratorConstants.GENERATOR_SOURCE_ENCODING);
   private String              outputEncoding                  =
       GeneratorProperties.getProperty(GeneratorConstants.GENERATOR_OUTPUT_ENCODING);
+
+
 
   public Generator() {}
 
@@ -342,6 +346,11 @@ public class Generator {
 
     private void initGeneratorControlProperties(File srcFile, String outputFile)
         throws SQLException {
+      if(StringUtils.endsWith(outputFile, GNENERATOR_NONE_OVERRIDE)){
+        outputFile = StringUtils.removeEnd(outputFile, GNENERATOR_NONE_OVERRIDE);
+        gg.setOverride(false);
+      }
+
       gg.setSourceFile(srcFile.getAbsolutePath());
       gg.setSourceFileName(srcFile.getName());
       gg.setSourceDir(srcFile.getParent());
@@ -431,6 +440,7 @@ public class Generator {
       } else {
         log.info("[generate]\t template:" + templateFile + " ==> " + outputFilepath);
       }
+
       FreemarkerHelper.processTemplate(template, templateModel, absoluteOutputFilePath,
           gg.getOutputEncoding());
     }

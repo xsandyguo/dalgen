@@ -33,6 +33,9 @@
 		<property name="mapperLocations">
 			<value>classpath*:sqlmap/${appModule}/${dbModule}/mappers/**/*.xml</value>
 		</property>
+		<property name="configLocation">
+			<value>classpath:sqlmap/${appModule}/${dbModule}/config/configuration.xml</value>
+		</property>
 	</bean>
 
 	<bean id="${dbModule}SqlSessionDAO" abstract="true">
