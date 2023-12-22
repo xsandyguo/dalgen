@@ -77,11 +77,16 @@ public class TableConfigXmlBuilder {
         }
         config.operations.add(target);
       }
-      // table/column
-      if ("column".equals(child.nodeName)) {
-        ColumnConfig target = new ColumnConfig();
-        BeanHelper.copyProperties(target, child.attributes, true);
-        config.columns.add(target);
+      if("typeMappings".equals(child.nodeName)) {
+        for (NodeData c : child.childs) {
+          if ("typeMapping".equals(c.nodeName)) {
+            ColumnConfig target = new ColumnConfig();
+            target.setName(c.attributes.get("column"));
+            target.setColumnAlias(c.attributes.get("alias"));
+            target.setJavatype(c.attributes.get("javaType"));
+            config.columns.add(target);
+          }
+        }
       }
       // table/sql
       if ("sql".equals(child.nodeName)) {

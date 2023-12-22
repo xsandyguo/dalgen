@@ -34,11 +34,6 @@
             </dependency>
             <dependency>
                 <groupId>net.petstore</groupId>
-                <artifactId>petstore-common-utils</artifactId>
-                <version>${petstore.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.petstore</groupId>
                 <artifactId>petstore-bootstrap</artifactId>
                 <version>${petstore.version}</version>
             </dependency>

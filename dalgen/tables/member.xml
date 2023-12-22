@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table SYSTEM "mybatis-table-config-1.0.dtd">
+
+<table sqlname="member">
+	<typeMappings>
+		<typeMapping column="type" javaType="net.petstore.common.dal.enums.MemberTypeEnum" />
+	</typeMappings>
+
+	<sql id="Member_columns">
+		id, vip_start, vip_end, sign_time, type, trial_start, trial_end 
+	</sql>
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			INSERT INTO member (
+	        	id ,vip_start ,vip_end ,sign_time ,type ,trial_start ,trial_end 
+	        ) VALUES (
+	        	? ,? ,? ,? ,? ,? ,? 
+	        )
+		</sql>
+	</operation>
+
+	<operation name="delete">
+		<sql>
+	        DELETE FROM member WHERE
+	        id = ? 
+		</sql>
+	</operation>
+
+	<operation name="update" paramtype="object">
+		<sql>
+	        UPDATE member SET
+		        vip_start = ? ,vip_end = ? ,sign_time = ? ,type = ? ,trial_start = ? ,trial_end = ? 
+	        WHERE
+	        	id = ? 
+		</sql>
+	</operation>
+
+	<operation name="updateIf" paramtype="object">
+		<sql>
+			UPDATE	member
+			<set>
+				<if test="vipStart != null">
+					vip_start = #{vipStart} ,
+				</if>
+				<if test="vipEnd != null">
+					vip_end = #{vipEnd} ,
+				</if>
+				<if test="signTime != null">
+					sign_time = #{signTime} ,
+				</if>
+				<if test="type != null">
+					type = #{type} ,
+				</if>
+				<if test="trialStart != null">
+					trial_start = #{trialStart} ,
+				</if>
+				<if test="trialEnd != null">
+					trial_end = #{trialEnd} 
+				</if>
+			</set>
+			<where>
+				id = ? 
+			</where>
+		</sql>
+	</operation>
+
+	<operation name="queryById" multiplicity="one">
+		<sql>
+	    	SELECT
+		    <include refid="Member_columns"/>
+	        FROM member
+	        WHERE
+		        id = ? 
+		</sql>
+	</operation>
+
+
+	<operation name="findPage" multiplicity="paging" paramtype="parameterObject">
+		<sql>
+			SELECT
+			<include refid="Member_columns"/>
+			FROM member
+			<where>
+				<if test="vipStart != null">
+					AND vip_start = #{vipStart}
+				</if>
+				<if test="vipEnd != null">
+					AND vip_end = #{vipEnd}
+				</if>
+				<if test="signTime != null">
+					AND sign_time = #{signTime}
+				</if>
+				<if test="type != null">
+					AND type = #{type}
+				</if>
+				<if test="trialStart != null">
+					AND trial_start = #{trialStart}
+				</if>
+				<if test="trialEnd != null">
+					AND trial_end = #{trialEnd}
+				</if>
+			</where>
+		</sql>
+	</operation>
+
+</table>

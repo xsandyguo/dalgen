@@ -23,22 +23,6 @@
             <groupId>net.petstore</groupId>
             <artifactId>petstore-common-dal</artifactId>
         </dependency>
-        <dependency>
-            <groupId>net.petstore</groupId>
-            <artifactId>petstore-common-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.petstore</groupId>
-            <artifactId>petstore-core-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.petstore</groupId>
-            <artifactId>petstore-web-home</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.petstore</groupId>
-            <artifactId>petstore-web-business</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>

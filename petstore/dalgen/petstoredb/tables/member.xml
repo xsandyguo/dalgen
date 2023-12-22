@@ -2,6 +2,14 @@
 <!DOCTYPE table SYSTEM "mybatis-table-config-1.0.dtd">
 
 <table sqlname="member">
+	<typeHandlers>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.answer.aal.entity.StatusEnum" />
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.answer.aal.entity.SexEnum" />
+	</typeHandlers>
+
+	<typeMappings>
+		<typeMapping columnName="sex" javaType="com.answer.aal.entity.SexEnum" />
+	</typeMappings>
 
 	<sql id="Member_columns">
 		id, uuid, real_name, password, phone_number, age, qq_number, signup_date, wechat_uid, nick_name 
